@@ -1,2 +1,2 @@
-Para el correcto funcionamiento de este bot es necesario un archivo en la mismo directorio con nombre "TOKEN.py"
+Para el correcto funcionamiento de este bot es necesario un archivo en la mismo directorio con nombre "TOKEN_BOT_CespedSur.py"
 Este debe tener una variable con nombre TOKEN con el token del bot de Telegram como string
