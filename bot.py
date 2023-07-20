@@ -25,7 +25,7 @@ def function_name(message):
 
     #if (len(texto) > 22) or (("-" not in texto) and  (len(texto) > 4) and len(texto) <16):
     if (("/" not in texto) and (len(texto) > 5)) or (len(texto) > 22):
-        
+
         bot.send_message(id,"Indique una cantidad valida")
 
 
@@ -34,7 +34,7 @@ def function_name(message):
         calculoM2(texto,id)
 
     elif ("-" in texto):
-        
+
         piscina(texto,id)
 
 
@@ -43,40 +43,48 @@ def function_name(message):
         whatsapp(texto, id)
 
 
-    
+
 ################
 ##  FUNCIONES ##
 ################
 
 def calculoM2(texto,id):
 
-    domicilio_temuco = '{:,}'.format((int(texto) * 3700)).replace(',','.')
-    instalado_temuco = '{:,}'.format((int(texto) * 4500)).replace(',','.')
-    instalado_bajo15_temuco = '{:,}'.format((int(texto) * 5500)).replace(',','.')
+    #Precios:
 
-    domicilio_labranza = '{:,}'.format((int(texto) * 3800)).replace(',','.')
-    instalado_labranza = '{:,}'.format((int(texto) * 4700)).replace(',','.')
-    instalado_bajo15_labranza = '{:,}'.format((int(texto) * 5500)).replace(',','.')
+    p_domicilio_temuco = 3700 + 500
+    p_instalado_temuco = 4700 + 500
+    p_instalado_bajo15_temuco = 5500 + 500
+
+    p_domicilio_labranza = 3800 + 500
+    p_instalado_labranza = 4700 + 500
+    p_instalado_bajo15_labranza = 5500 + 500
+    
+    
+    #Dar formato con puntos al valor
+    def fp(precio):
+        return '{:,}'.format((int(texto) * precio)).replace(',','.')
+        
 
     if int(texto) >= 15:
 
         #Repuestas del bot si son 15 o mas m²
         bot.send_message(id,"TEMUCO:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Temuco es de: $" +str(domicilio_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Temuco es de: $" +str(instalado_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Temuco es de: $" + fp(p_domicilio_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Temuco es de: $" + fp(p_instalado_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
         bot.send_message(id,"LABRANZA:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Labranza es de: $" +str(domicilio_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Labranza es de: $" +str(instalado_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Labranza es de: $" + fp(p_domicilio_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Labranza es de: $" + fp(p_instalado_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
 
     elif int(texto) <15:
 
         #Repuestas del bot si menos de 15m²
         bot.send_message(id,"TEMUCO:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Temuco es de: $" +str(domicilio_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Temuco es de: $" +str(instalado_bajo15_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Temuco es de: $" + fp(p_domicilio_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Temuco es de: $" + fp(p_instalado_bajo15_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
         bot.send_message(id,"LABRANZA:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Labranza es de: $" +str(domicilio_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Labranza es de: $" + str(instalado_bajo15_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Labranza es de: $" + fp(p_domicilio_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Labranza es de: $" + fp(p_instalado_bajo15_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
 
 
 def piscina(texto,id):
@@ -106,6 +114,8 @@ def piscina(texto,id):
     bot.send_message(id, "Largo: " +str(largo) + "m\n" +"Ancho: " +str(ancho) + "m\n" + "Metros lineales pasto en cada direccion: " +str(anchoPasto) + "m\n\n" + "Esquinas: " +str(m2Esquinas) + "m²\n" + "Planos Verticales: " +str(m2PlanosVerticales) + "m²\n" + "Planos Horizontales: " +str(m2PlanosHorizontales) + "m²")
     bot.send_message(id, "Total: " +str(m2Totales) + "m²")
 
+
+    #Responde con el link para abrir un chat de whatsapp con el cliente
 def whatsapp(texto,id):
 
     command, numero = texto.split(" ")
