@@ -62,29 +62,28 @@ def calculoM2(texto,id):
     
     
     #Dar formato con puntos al valor
-    def fp(precio):
-        return '{:,}'.format((int(texto) * precio)).replace(',','.')
+    fp = lambda precio: '{:,}'.format((int(texto) * precio)).replace(',', '.')
         
 
     if int(texto) >= 15:
 
         #Repuestas del bot si son 15 o mas m²
         bot.send_message(id,"TEMUCO:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Temuco es de: $" + fp(p_domicilio_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Temuco es de: $" + fp(p_instalado_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con entrega a domicilio para sus {texto}m² en Temuco es de: ${fp(p_domicilio_temuco)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con instalación para sus {texto}m² en Temuco es de: ${fp(p_instalado_temuco)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
         bot.send_message(id,"LABRANZA:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Labranza es de: $" + fp(p_domicilio_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Labranza es de: $" + fp(p_instalado_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con entrega a domicilio para sus {texto}m² en Labranza es de: ${fp(p_domicilio_labranza)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con instalación para sus {texto}m² en Labranza es de: ${fp(p_instalado_labranza)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
 
     elif int(texto) <15:
 
         #Repuestas del bot si menos de 15m²
         bot.send_message(id,"TEMUCO:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Temuco es de: $" + fp(p_domicilio_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Temuco es de: $" + fp(p_instalado_bajo15_temuco) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con entrega a domicilio para sus {texto}m² en Temuco es de: ${fp(p_domicilio_temuco)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con instalación para sus {texto}m² en Temuco es de: ${fp(p_instalado_bajo15_temuco)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
         bot.send_message(id,"LABRANZA:")
-        bot.send_message(id,"`El valor con entrega a domicilio para sus " + texto + "m² en Labranza es de: $" + fp(p_domicilio_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
-        bot.send_message(id,"`El valor con instalación para sus " + texto + "m² en Labranza es de: $" + fp(p_instalado_bajo15_labranza) + "`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con entrega a domicilio para sus {texto}m² en Labranza es de: ${fp(p_domicilio_labranza)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
+        bot.send_message(id,f"`El valor con instalación para sus {texto}m² en Labranza es de: ${fp(p_instalado_bajo15_labranza)}`", parse_mode=telegram.constants.ParseMode.MARKDOWN)
 
 
 def piscina(texto,id):
@@ -111,8 +110,8 @@ def piscina(texto,id):
     m2Totales = m2Esquinas + m2PlanosVerticales + m2PlanosHorizontales
 
     #Repuestas del bot
-    bot.send_message(id, "Largo: " +str(largo) + "m\n" +"Ancho: " +str(ancho) + "m\n" + "Metros lineales pasto en cada direccion: " +str(anchoPasto) + "m\n\n" + "Esquinas: " +str(m2Esquinas) + "m²\n" + "Planos Verticales: " +str(m2PlanosVerticales) + "m²\n" + "Planos Horizontales: " +str(m2PlanosHorizontales) + "m²")
-    bot.send_message(id, "Total: " +str(m2Totales) + "m²")
+    bot.send_message(id, f"Largo: {largo}m\nAncho: {ancho}m\nMetros lineales pasto en cada direccion: {anchoPasto}m\n\nEsquinas: {m2Esquinas}m²\nPlanos Verticales: {m2PlanosVerticales}m²\nPlanos Horizontales: {m2PlanosHorizontales}m²")
+    bot.send_message(id, f"Total: {m2Totales}m²")
 
 
     #Responde con el link para abrir un chat de whatsapp con el cliente
@@ -121,11 +120,11 @@ def whatsapp(texto,id):
     command, numero = texto.split(" ")
 
     if len(numero) == 8:
-        bot.send_message(id, "https://api.whatsapp.com/send?phone=569" + numero)
+        bot.send_message(id, f"https://api.whatsapp.com/send?phone=569{numero}")
     elif len(numero) == 9:
-        bot.send_message(id, "https://api.whatsapp.com/send?phone=56" + numero)
+        bot.send_message(id, f"https://api.whatsapp.com/send?phone=56{numero}")
     elif "+" in numero:
-        bot.send_message(id, "https://api.whatsapp.com/send?phone=" + numero.replace("+", ""))
+        bot.send_message(id, f"https://api.whatsapp.com/send?phone={numero.replace('+', '')}")
     else:
         bot.send_message(id, "numero incorrecto")
 
